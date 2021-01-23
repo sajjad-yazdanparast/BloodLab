@@ -2,33 +2,113 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from .models import User, BloodExpert, Lab, TimeService
+from django.db import transaction 
 # Create your views here.
 
-import pyodbc
 
-server = 'sajjad\SQLSERVER2021'
-database = 'BloodLab'
-username = 'sa'
-password = 's@j1563j@d'
-cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-cursor = cnxn.cursor()
-# tsql = "SELECT snn, firstName, lastName FROM [dbo].[User];"
-# with cursor.execute(tsql):
-#     row = cursor.fetchone()
-#     while row:
-#         print (str(row[0]) + " " + str(row[1])+ " "+str(row[2]))
-#         row = cursor.fetchone()
-
-class Signin (APIView) :
+class UserSignup (APIView) :
 
     def post (self, *args, **kwargs) :
-        tsql = f"INSERT INTO [dbo].[User] (snn, password, firstName, lastName, sex, email, phone) VALUES (?,?,?,?,?,?,?);" 
         data = self.request.data
-        with cursor.execute(tsql,data['snn'],data['password'],data['firstName'],data['lastName'],data['sex'],data['email'],data['phone'],):
-            print ('Successfully Inserted!')
+        try :
+            User.objects.create(data['snn'],data['password'],data['firstName'],\
+                                data['lastName'],data['sex'],data['email'],data['phone'])
+            return Response(data={
+                "message" : "User successfuly inserted!"
+            }, status=status.HTTP_201_CREATED)
 
-        return Response(data={
-            "message" : "Successfuly inserted!"
-        }, status=status.HTTP_201_CREATED)
+        except Exception as exc :
+            return Response(data={
+                "message" : str(exc)
+                }, status=status.HTTP_201_CREATED)
+
+        
+        
+class BloodExpertSignup (APIView) :
+
+    def post (self, *args, **kwargs) :
+        data = self.request.data
+        try :
+            lab = Lab.objectst.get(name=data['lab'])
+            BloodExpert.objects.create(data['snn'],data['password'],data['firstName'],\
+                                data['lastName'],data['sex'],data['email'],data['phone'],lab=lab)
+            return Response(data={
+                "message" : "Expert successfuly inserted!"
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as exc :
+            return Response(data={
+                "message" : str(exc)
+                }, status=status.HTTP_201_CREATED)
+
+
+class LabSignup (APIView) :
+
+    def post (self, *args, **kwargs) :
+        data = self.request.data
+        try :
+            Lab.objects.create(data['name'],data['end_point'],data['api_ley'])
+            return Response(data={
+                "message" : "Lab successfuly inserted!"
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as exc :
+            return Response(data={
+                "message" : str(exc)
+                }, status=status.HTTP_201_CREATED)
+
+
+class TimeServiceRegistery (APIView) :
+
+    def post (self, *args, **kwargs) :
+        data = self.request.data
+        try :
+            expert = BloodExpert.objects.get(snn=data['expert_snn'])
+            TimeService.objects.create(expert_snn = expert, date = data['date'], stime = data['stime'],\
+                                etime = data['etime'], evailable = data['evailable'])
+            return Response(data={
+                "message" : "Serive time successfuly added!"
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as exc :
+            return Response(data={
+                "message" : str(exc)
+                }, status=status.HTTP_201_CREATED)
+
+    @transaction.atomic
+    def put (self, *arg, **kwargs) :
+        data = self.request.data 
+        try : 
+            time_service = TimeService.objects.get(expert_snn = data['expert_snn'], date = data['date'],\
+                                                   stime = data['stime'], etime = data['etime'])
+                                                   
+            time_service.date = data['new_date'] 
+            time_service.stime = data['new_stime'] 
+            time_service.etime = data['new_etime'] 
+            time_service.available = data['evailable'] 
+
+            time_service.save()
+
+            return Response(
+                data={
+                    "expert_snn" : time_service.expert_snn ,
+                    "date" : time_service.date ,
+                    "stime" : time_service.stime ,
+                    "edtime" : time_service.etime ,
+                    "available" : time_service.available
+                } ,
+                status=status.HTTP_200_OK
+            )
+        except Exception as exc : 
+            return Response(data={
+                "message" : str(exc)
+                }, status=status.HTTP_201_CREATED)
+
+
+
+
+        
+
+        
         

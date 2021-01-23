@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
-
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 class User (models.Model) :
@@ -9,7 +9,7 @@ class User (models.Model) :
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     sex = models.BooleanField()
-    phone = models.CharField(max_length=10, validators=[RegexValidator(regex=r"^\w{11}$", message="phone number length must be 11")])
+    phone = models.CharField(max_length=11, validators=[RegexValidator(regex=r"^\w{11}$", message="phone number length must be 11")])
     email = models.EmailField(null=True, blank=True)
 
 class Lab (models.Model) :
@@ -33,6 +33,11 @@ class TimeService (models.Model) :
 
     class Meta : 
         unique_together = (("expert_snn", "date", "stime", "etime"))
+
+    def clean (self) :
+        super().clean()
+        if self.stime > self.etime :
+            raise ValidationError(message="start time is further than end time!")
 
     
 
