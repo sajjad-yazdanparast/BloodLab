@@ -4,7 +4,15 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User, BloodExpert, Lab, TimeService
 from django.db import transaction 
+from order.models import Order
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User as AuthUser
+from rest_framework_simplejwt.tokens import RefreshToken
+
 # Create your views here.
+
+# class RefreshUserToken(APIView) :
+#     get get
 
 
 class UserSignup (APIView) :
@@ -12,9 +20,13 @@ class UserSignup (APIView) :
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
-            User.objects.create(data['snn'],data['password'],data['firstName'],\
-                                data['lastName'],data['sex'],data['email'],data['phone'])
+            new_user = AuthUser.objects.create_user(username=data['snn'], password=data['password'], email=data['email'],\
+                 first_name=data['firstName'], last_name = data['lastName'])
+            User.objects.create(user=new_user, phone = data['phone'], sex = data['sex'])
+            refresh = RefreshToken.for_user(new_user)
             return Response(data={
+                "access" : str(refresh.access_token) ,
+                "refresh" : str(refresh) ,
                 "message" : "User successfuly inserted!"
             }, status=status.HTTP_201_CREATED)
 
@@ -27,13 +39,19 @@ class UserSignup (APIView) :
         
 class BloodExpertSignup (APIView) :
 
+    # @transaction.atomic
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
-            lab = Lab.objectst.get(name=data['lab'])
-            BloodExpert.objects.create(data['snn'],data['password'],data['firstName'],\
-                                data['lastName'],data['sex'],data['email'],data['phone'],lab=lab)
+            lab = Lab.objects.get(name=data['lab'])
+            new_user = AuthUser.objects.create_user(username=data['snn'], password=data['password'], email=data['email'],\
+                 first_name=data['firstName'], last_name = data['lastName'])
+            BloodExpert.objects.create(user=new_user, phone = data['phone'], sex = data['sex'], lab=lab)
+
+            refresh = RefreshToken.for_user(new_user)
             return Response(data={
+                "access" : str(refresh.access_token) ,
+                "refresh" : str(refresh) ,
                 "message" : "Expert successfuly inserted!"
             }, status=status.HTTP_201_CREATED)
 
@@ -48,7 +66,7 @@ class LabSignup (APIView) :
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
-            Lab.objects.create(data['name'],data['end_point'],data['api_ley'])
+            Lab.objects.create(name=data['name'], end_point=data['end_point'], api_key=data['api_key'])
             return Response(data={
                 "message" : "Lab successfuly inserted!"
             }, status=status.HTTP_201_CREATED)
@@ -56,15 +74,16 @@ class LabSignup (APIView) :
         except Exception as exc :
             return Response(data={
                 "message" : str(exc)
-                }, status=status.HTTP_201_CREATED)
+                }, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TimeServiceRegistery (APIView) :
 
+    permission_classes = (IsAuthenticated,)
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
-            expert = BloodExpert.objects.get(snn=data['expert_snn'])
+            expert = BloodExpert.objects.get(snn=self.request.user.username)
             TimeService.objects.create(expert_snn = expert, date = data['date'], stime = data['stime'],\
                                 etime = data['etime'], evailable = data['evailable'])
             return Response(data={
@@ -76,7 +95,6 @@ class TimeServiceRegistery (APIView) :
                 "message" : str(exc)
                 }, status=status.HTTP_201_CREATED)
 
-    @transaction.atomic
     def put (self, *arg, **kwargs) :
         data = self.request.data 
         try : 
@@ -104,11 +122,6 @@ class TimeServiceRegistery (APIView) :
             return Response(data={
                 "message" : str(exc)
                 }, status=status.HTTP_201_CREATED)
+   
 
-
-
-
-        
-
-        
         

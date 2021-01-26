@@ -1,16 +1,13 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User as AuthUser 
 # Create your models here.
 
 class User (models.Model) :
-    snn = models.CharField(primary_key = True, max_length = 10 ,validators=[RegexValidator(regex=r"^\w{10}$", message="snn length must be 10")])
-    password = models.CharField(max_length=10) 
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    user = models.OneToOneField( AuthUser, on_delete=models.CASCADE, primary_key=True)
     sex = models.BooleanField()
     phone = models.CharField(max_length=11, validators=[RegexValidator(regex=r"^\w{11}$", message="phone number length must be 11")])
-    email = models.EmailField(null=True, blank=True)
 
 class Lab (models.Model) :
     name = models.CharField(primary_key=True, max_length=50) 
