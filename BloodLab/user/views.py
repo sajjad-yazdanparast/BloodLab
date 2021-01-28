@@ -130,4 +130,21 @@ class TimeServiceRegistery (APIView) :
                 }, status=status.HTTP_201_CREATED)
    
 
-        
+
+class GetStatistics(APIView) :
+
+    def get (self, *args, **kwargs) :
+        blood_expert_num = BloodExpert.objects.all().count()
+        lab_num = Lab.objects.all().count() 
+        type_num = TestType.objects.all().count()
+        user_num = User.objects.all().count()
+
+        return Response(
+            data = {
+                "blood_expert_num" : blood_expert_num ,
+                "lab_num" : lab_num ,
+                "type_num" : type_num ,
+                "user_num" : user_num
+            }
+            ,status= status.HTTP_200_OK
+        )   

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserSignup, BloodExpertSignup, LabSignup, TimeServiceRegistery
+from .views import UserSignup, BloodExpertSignup, LabSignup, TimeServiceRegistery, GetStatistics
 from rest_framework_simplejwt.views import (
     TokenObtainPairView ,
     TokenRefreshView 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('refresh/', TokenRefreshView.as_view(), name='refresh'),
     path('time_service_registery/', TimeServiceRegistery.as_view(), name = 'time-service-registery') ,
+    path('statistics/',GetStatistics.as_view(), name='get-statistics'),
 ]
