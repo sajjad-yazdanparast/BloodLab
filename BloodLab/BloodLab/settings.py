@@ -88,8 +88,8 @@ DATABASES = {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'BloodLab',
         'USER': 'sa',
-        'PASSWORD': 's@j1563j@d',
-        'HOST': 'sajjad\SQLSERVER2021',
+        'PASSWORD': '123456',
+        'HOST': 'DESKTOP-1S9C118\SQLSERVER2020',
         'PORT': '',
 
         'OPTIONS': {
