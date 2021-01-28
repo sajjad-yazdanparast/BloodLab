@@ -19,7 +19,7 @@ from django.db.models import Count
 class GetOrCreateTestType(APIView) :
 
     def post (self, *args, **kwargs) :
-        serializer = TestTypeSerializer(data= self.request.data)
+        serializer = TestTypeSerializer(data= self.request.data, many=True)
 
         if serializer.is_valid() :
             serializer.save()
@@ -59,7 +59,7 @@ class GetOrCreateOrders (APIView) :
         data = self.request.data 
         data['user'] = self.request.user.username
         serializer = OrderCreateSerializer(data= data) 
-        if serializer.is_valid(raise_exception=True) :
+        if serializer.is_valid() :
             order = serializer.save()
 
             return Response(
@@ -68,6 +68,14 @@ class GetOrCreateOrders (APIView) :
                     "id" : order.id
                 } ,
                 status=status.HTTP_200_OK
+            )
+        else :
+            
+            return Response(
+                data = {
+                    "message": "some error occurred!" 
+                } ,
+                status=status.HTTP_400_BAD_REQUEST
             )
 
      

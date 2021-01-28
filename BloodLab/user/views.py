@@ -89,7 +89,7 @@ class TimeServiceRegistery (APIView) :
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
-            expert = BloodExpert.objects.get(snn=self.request.user.username)
+            expert = BloodExpert.objects.get(user__username=self.request.user.username)
             TimeService.objects.create(expert_snn = expert, date = data['date'], stime = data['stime'],\
                                 etime = data['etime'], evailable = data['evailable'])
             return Response(data={
