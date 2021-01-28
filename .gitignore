@@ -1,6 +1,6 @@
 venv
 connect.py
-
+settings.py
 # Created by .ignore support plugin (hsz.mobi)
 
 **/resources/
