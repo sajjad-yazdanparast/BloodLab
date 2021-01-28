@@ -1,5 +1,6 @@
 Django==3.0.7
 djangorestframework==3.11.0
+django-mssql-backend==2.8.1
+djangorestframework-simplejwt==4.6.0
 requests==2.25.1
 pyodbc==4.0.30
-django-mssql-backend==2.8.1

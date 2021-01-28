@@ -4,7 +4,7 @@ from user.models import User, Lab
 
 class TestType (models.Model) :
     name = models.CharField(primary_key=True, max_length=50) 
-    lab = models.ManyToManyField('user.Lab')
+    lab = models.ManyToManyField('user.Lab',related_name='testtypes')
 
 
 class Order (models.Model) :
@@ -18,7 +18,7 @@ class Order (models.Model) :
         (READY_IN_LAB,'Your order is ready in lab'),
         (TO_THE_WAY_OF_HOME,'Your order in the way to you'),
     )
-
+    expert = models.ForeignKey('user.BloodExpert', on_delete=models.SET_NULL, null=True, blank=True, default= None)
     status = models.IntegerField(choices=CHOISES)
     price = models.FloatField()
     longitude = models.FloatField(null=True, blank=True)

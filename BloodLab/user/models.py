@@ -25,7 +25,7 @@ class TimeService (models.Model) :
     date = models.DateField()
     stime = models.TimeField()
     etime = models.TimeField()
-    evailable = models.BooleanField()
+    evailable = models.BooleanField(default=True)
     
 
     class Meta : 

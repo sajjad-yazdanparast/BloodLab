@@ -3,8 +3,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User, BloodExpert, Lab, TimeService
+from .serializer import LabSerializer
 from django.db import transaction 
-from order.models import Order
+from order.models import Order, TestType
+from order.serializer import TestTypeSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User as AuthUser
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -39,7 +41,6 @@ class UserSignup (APIView) :
         
 class BloodExpertSignup (APIView) :
 
-    # @transaction.atomic
     def post (self, *args, **kwargs) :
         data = self.request.data
         try :
@@ -65,16 +66,21 @@ class LabSignup (APIView) :
 
     def post (self, *args, **kwargs) :
         data = self.request.data
-        try :
-            Lab.objects.create(name=data['name'], end_point=data['end_point'], api_key=data['api_key'])
-            return Response(data={
-                "message" : "Lab successfuly inserted!"
-            }, status=status.HTTP_201_CREATED)
+        types = data.pop('types') 
+        
 
-        except Exception as exc :
+        lab_serializer = LabSerializer(data=data)
+        if lab_serializer.is_valid() :
+            lab = lab_serializer.save()
+            for testtype in types :
+                t , _= TestType.objects.get_or_create(name=testtype['name'])
+                t.lab.add(lab)
             return Response(data={
-                "message" : str(exc)
-                }, status=status.HTTP_400_BAD_REQUEST)
+                "message" : f"{lab} successfuly inserted!"
+            }, status=status.HTTP_201_CREATED)
+        else :
+            return Response(data= lab_serializer.errors
+                , status=status.HTTP_400_BAD_REQUEST)
 
 
 class TimeServiceRegistery (APIView) :

@@ -6,12 +6,12 @@ from user.models import User
 class TestTypeSerializer(ModelSerializer) :
     class Meta :
         model = TestType
-        fields = 'name'
+        fields = ('name',)
 
 class LabSerializer (ModelSerializer) :
     class Meta :
         model = Lab
-        fields = 'name'
+        fields = ('name',)
 
 
 class TestSerializer (ModelSerializer) :
