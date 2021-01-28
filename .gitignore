@@ -1,6 +1,6 @@
 venv
 connect.py
-settings.py
+
 # Created by .ignore support plugin (hsz.mobi)
 
 **/resources/
@@ -231,3 +231,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 **/*.pkl
+BloodLab/BloodLab/settings.py
+BloodLab/BloodLab/settings.py
