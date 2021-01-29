@@ -5,3 +5,4 @@ djangorestframework-simplejwt==4.6.0
 django-cors-headers==3.7.0
 requests==2.25.1
 pyodbc==4.0.30
+django-cors-headers==3.7.0
