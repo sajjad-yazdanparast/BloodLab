@@ -114,7 +114,7 @@ class GetLabsDoingSpecificTestsAndReservasion(APIView) :
 class GetLabFreeTimeServices (APIView) :
     permission_class = (IsAuthenticated,)
 
-    def get (self, *args, **kwargs) :
+    def post (self, *args, **kwargs) :
         # serializer = LabSerializer(data= self.request.data) 
         try:
             t = TimeService.objects.filter(expert_snn__lab__name=self.request.data.get('lab'), evailable=True)
