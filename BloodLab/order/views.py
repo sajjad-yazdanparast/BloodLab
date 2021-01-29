@@ -82,7 +82,7 @@ class GetOrCreateOrders (APIView) :
 class GetLabsDoingSpecificTestsAndReservasion(APIView) :
     permission_class = (IsAuthenticated,)
 
-    def get (self, *args, **kwargs) :
+    def put (self, *args, **kwargs) :
         requested_types = self.request.data
         labs = Lab.objects.all()
 
