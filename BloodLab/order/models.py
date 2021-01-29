@@ -7,6 +7,10 @@ class TestType (models.Model) :
     lab = models.ManyToManyField('user.Lab',related_name='testtypes')
 
 
+    def __str__(self):
+        return self.name
+
+
 class Order (models.Model) :
     TO_THE_WAY_OF_LAB = 0 #'tolab'
     PENDING_IN_LAB = 1 #'pending'
@@ -33,3 +37,8 @@ class Test(models.Model) :
     lab = models.ForeignKey('user.Lab', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('user.User', on_delete= models.CASCADE)
     result = models.TextField()
+
+
+    def __str__(self):
+        return str(self.user.user.first_name) + 'ordered ' + str(self.type.name) + ' test which result is ' + \
+            str(self.result)

@@ -9,10 +9,16 @@ class User (models.Model) :
     sex = models.BooleanField()
     phone = models.CharField(max_length=11, validators=[RegexValidator(regex=r"^\w{11}$", message="phone number length must be 11")])
 
+    def __str__(self):
+        return str(self.user.first_name) + " " + str(self.user.last_name) 
+
 class Lab (models.Model) :
     name = models.CharField(primary_key=True, max_length=50) 
     end_point = models.URLField()
     api_key = models.TextField()
+
+    def __str__(self):
+        return str(self.name)
     
 
 class BloodExpert (User) :
@@ -20,12 +26,21 @@ class BloodExpert (User) :
     longitude = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
 
+    
+    def __str__(self):
+        return str(self.user.first_name) + " " + str(self.user.last_name) 
+
 class TimeService (models.Model) :
     expert_snn = models.ForeignKey(BloodExpert, on_delete=models.CASCADE)
     date = models.DateField()
     stime = models.TimeField()
     etime = models.TimeField()
     evailable = models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.date) + "\t ===>\t" + \
+            str(self.stime) + " till " + \
+            str(self.etime) 
     
 
     class Meta : 
