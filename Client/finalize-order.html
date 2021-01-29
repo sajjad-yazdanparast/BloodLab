@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>finalize order</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/finalize_order.js"></script>
+
+  
+</head>
+<body onload="get_times()">
+
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="centered">ثبت سفارش جدید</h2>
+  </div>
+
+  <div class="container">
+    <h2 class="right-to-left">انتخاب زمان</h2>
+    <p class="right-to-left">زمان مورد نظر خود را انتخاب نمایید:</p>
+    <form id = "service-times">
+      <!-- <div style="text-align: right; direction: rtl;" class="radio iransans">
+        <label class="checkbox-inline"><input type="radio" name="optradio" ><span style="margin-right: 20px;">زمان ۱</span></label>
+      </div>
+      <div style="text-align: right; direction: rtl;" class="radio iransans">
+        <label class="checkbox-inline"><input type="radio" name="optradio" ><span style="margin-right: 20px;">زمان ۲</span></label>
+      </div>
+      <div style="text-align: right; direction: rtl;" class="radio iransans ">
+        <label class="checkbox-inline"><input type="radio" name="optradio" ><span style="margin-right: 20px;">زمان ۳</span></label>
+      </div> -->
+    </form>
+  </div>
+  <div class="form-group">
+      <p class="right-to-left">لطفا آدرس محل نمونه‌گیری را وارد نمایید:</p>
+    <input type="text" class="form-control" id="address">
+  </div>
+  <div style="max-width: 200px;" class="container">
+    <a onclick="set_time()" href="#" class="btn btn-info iransans center-block" role="button">پرداخت</a>
+  </div>  
+
+</body>
+</html>

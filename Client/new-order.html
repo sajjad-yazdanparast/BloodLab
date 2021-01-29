@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>New Order</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/get_all_test_types.js"></script>
+
+  
+</head>
+<body onload="get_all_test_types()">
+
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="centered">ثبت سفارش جدید</h2>
+  </div>
+  <div class="container">
+    <h2 class="right-to-left">انتخاب آزمایش‌ها</h2>
+    <p class="right-to-left">آزمایش‌های مورد نظر خود را انتخاب نمایید:</p>
+    <form id = "test-types">
+    </form>
+  </div>
+  <div class="container">
+    <h2 class="right-to-left">انتخاب آزمایشگاه</h2>
+    <p class="right-to-left">آزمایگاه مورد نظر خود را انتخاب نمایید:</p>
+    <form id = "labs">
+    </form>
+  </div>
+  <div style="max-width: 200px;" class="container">
+    <a onclick="set_lab()" href="finalize-order.html" class="btn btn-info iransans center-block" role="button">انتخاب زمان و مکان</a>
+  </div>
+
+</body>
+</html>

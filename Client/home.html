@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/get_statistics.js"></script>
+
+</head>
+<body onload="get_statistics()">
+
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="centered">سیستم آزمایشگاه سیار</h2>
+  </div>
+  <div class="container-fluid">
+    <br>
+    <div class="row text-center">
+      <div class="col-sm-3">
+        <div>
+          <i class="material-icons" style="font-size:48px;color:rgba(184, 184, 184, 0.616)">local_pharmacy</i>
+        </div>
+        <span id = "blood_expert_num">
+        </span>
+        Blood Experts
+      </div>
+      <div class="col-sm-3">
+        <div>
+          <i class="material-icons" style="font-size:48px;color:rgba(184, 184, 184, 0.616)">business</i>
+        </div>
+        <span id = "lab_num">
+        </span>
+        Labratories
+      </div>
+      <div class="col-sm-3">
+        <div>
+          <i class="material-icons" style="font-size:48px;color:rgba(184, 184, 184, 0.616)">invert_colors</i>
+        </div>
+        <span id = "type_num">
+        </span>
+        Different Tests
+      </div>
+      <div class="col-sm-3">
+        <div>
+          <i class="material-icons" style="font-size:48px;color:rgba(184, 184, 184, 0.616)">person</i>
+        </div>
+        <span id = "user_num">
+        </span>
+        Users
+      </div>
+    </div>
+    <br>
+    
+  </div>
+  <br><br><br>
+  <div style="max-width: 500px;" class="container">
+    <a href="new-order.html" class="btn btn-primary btn-lg btn-block iransans">ثبت سفارش جدید</a>
+    <!-- <a href="my-orders.html" class="btn btn-default btn-lg btn-block iransans">سفارش‌های من</a> -->
+  </div>
+</div>
+
+</body>
+</html>
